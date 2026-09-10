@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>TabTidy</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <img src="icons/icon48.png" alt="" class="brand-mark" />
+          <div class="brand-text">
+            <h1>Tab Cleaner</h1>
+            <p class="tagline">Sweeps away tabs you've stopped using</p>
+          </div>
+        </div>
+        <label class="switch" title="Turn automatic sweeping on or off">
+          <input type="checkbox" id="enabledToggle" />
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+        </label>
+      </header>
+
+      <nav class="tabs" role="tablist">
+        <button class="tab-btn" data-view="settings" role="tab">
+          Settings
+        </button>
+        <button class="tab-btn" data-view="open" role="tab">
+          Open tabs <span class="count-pill" id="openCount">0</span>
+        </button>
+        <button class="tab-btn" data-view="archive" role="tab">
+          Archive <span class="count-pill" id="archiveCount">0</span>
+        </button>
+      </nav>
+
+      <main class="views">
+        <section class="view" data-view="settings">
+          <div class="field">
+            <span class="field-label">Appearance</span>
+            <div class="segmented" id="themeGroup">
+              <label class="segment">
+                <input type="radio" name="theme" value="system" />
+                <span>System</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="theme" value="light" />
+                <span>Light</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="theme" value="dark" />
+                <span>Dark</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="thresholdHours">Sweep tabs idle for</label>
+              <div class="stepper">
+                <button
+                  type="button"
+                  class="step-btn"
+                  id="thresholdDown"
+                  aria-label="Decrease hours"
+                >
+                  –
+                </button>
+                <input
+                  type="number"
+                  id="thresholdHours"
+                  min="0.5"
+                  max="336"
+                  step="0.5"
+                  inputmode="decimal"
+                />
+                <span class="unit">hrs</span>
+                <button
+                  type="button"
+                  class="step-btn"
+                  id="thresholdUp"
+                  aria-label="Increase hours"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <input
+              type="range"
+              id="thresholdSlider"
+              min="0.5"
+              max="72"
+              step="0.5"
+              class="slider"
+            />
+            <div class="slider-scale">
+              <span>30m</span><span>1 day</span><span>3 days</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">When a tab gets swept</span>
+            <div class="choice-group" id="modeGroup">
+              <label class="choice">
+                <input type="radio" name="mode" value="archive" />
+                <span class="choice-body">
+                  <span class="choice-title">Archive it</span>
+                  <span class="choice-sub"
+                    >Save the link here so you can reopen it later</span
+                  >
+                </span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="mode" value="close" />
+                <span class="choice-body">
+                  <span class="choice-title">Close it for good</span>
+                  <span class="choice-sub"
+                    >No record kept — the tab is just gone</span
+                  >
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">Never sweep</span>
+            <label class="checkbox-row">
+              <input type="checkbox" id="excludePinned" />
+              <span>Pinned tabs</span>
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" id="excludeAudible" />
+              <span>Tabs playing audio</span>
+            </label>
+          </div>
+
+          <div class="field">
+            <label for="whitelist" class="field-label"
+              >Always keep these sites open</label
+            >
+            <textarea
+              id="whitelist"
+              rows="3"
+              placeholder="example.com&#10;docs.google.com"
+            ></textarea>
+            <p class="hint">
+              One domain per line. Tabs on these sites are never swept.
+            </p>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" id="saveBtn">Save changes</button>
+            <span class="save-msg" id="saveMsg" role="status"></span>
+          </div>
+        </section>
+
+        <section class="view" data-view="open">
+          <div class="list-toolbar">
+            <p class="hint">Sorted by how long each tab has sat idle.</p>
+            <button class="btn ghost small" id="sweepNowBtn">Sweep now</button>
+          </div>
+          <ul class="tab-list" id="openTabsList"></ul>
+          <p class="empty-state" id="openTabsEmpty" hidden>
+            No other tabs open right now.
+          </p>
+        </section>
+
+        <section class="view" data-view="archive">
+          <div class="list-toolbar">
+            <p class="hint">Tabs closed automatically land here.</p>
+            <button class="btn ghost small" id="clearArchiveBtn">
+              Clear all
+            </button>
+          </div>
+          <ul class="tab-list" id="archiveList"></ul>
+          <p class="empty-state" id="archiveEmpty" hidden>
+            Nothing archived yet.
+          </p>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span
+          >Built by
+          <a
+            href="https://github.com/realunfazed"
+            target="_blank"
+            rel="noopener"
+            >github.com/realunfazed</a
+          ></span
+        >
+      </footer>
+
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+
+    <script src="shared.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

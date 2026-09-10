@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "TabTidy - Tab Cleaner",
+  "version": "1.0.0",
+  "description": "Automatically close or archive tabs you haven't touched in a while. Built by github.com/realunfazed",
+  "author": "github.com/realunfazed",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "tab-cleaner@unfazed.ir",
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "permissions": ["tabs", "storage", "alarms"],
+  "background": {
+    "scripts": ["shared.js", "background.js"]
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tab Cleaner",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
