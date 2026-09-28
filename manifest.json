@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TabTidy - Tab Cleaner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automatically close or archive tabs you haven't touched in a while. Built by github.com/realunfazed",
   "author": "github.com/realunfazed",
   "browser_specific_settings": {
